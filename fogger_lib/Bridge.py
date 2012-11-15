@@ -12,7 +12,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-from gi.repository import Gtk, Unity, Notify, Dbusmenu, TelepathyGLib
+#from gi.repository import Gtk, Unity, Notify, Dbusmenu, TelepathyGLib
+from gi.repository import Gtk, Notify, TelepathyGLib
 
 Notify.init('fogger')
 
@@ -36,14 +37,20 @@ class DesktopBridge:
         self.W = root
         self.desktop_file = desktop_file
         self.icon_name = icon_name
-        self.launcher_entry = Unity.LauncherEntry.get_for_desktop_file(self.desktop_file)
-        self.quicklist = Dbusmenu.Menuitem.new()
-        self.launcher_entry.set_property("quicklist", self.quicklist)
+        #self.launcher_entry = Unity.LauncherEntry.get_for_desktop_file(self.desktop_file)
+        #self.quicklist = Dbusmenu.Menuitem.new()
+        #self.launcher_entry.set_property("quicklist", self.quicklist)
+        self.launcher_entry = None
+        self.quicklist = None
         self.indicator = None
-        self._rename_methods = {
-            Dbusmenu.Menuitem: self._rename_dbus_menu_item,
-            Gtk.MenuItem: self._rename_gtk_menu_item,
-        }
+        #self._rename_methods = {
+        #    Dbusmenu.Menuitem: self._rename_dbus_menu_item,
+        #    Gtk.MenuItem: self._rename_gtk_menu_item,
+        #}
+        self.launcher_entry = None
+        self.quicklist = None
+        self.indicator = None
+        self._rename_methods = { }
         self.telepathy_account_manager = TelepathyGLib.AccountManager.new(
                                              TelepathyGLib.DBusDaemon.dup())
         self.telepathy_account_manager.connect(
